@@ -6,21 +6,31 @@
 }
 
 body {
-  background-color: #ffac91;
+  background-color: #ff9068;
 }
 
-@keyframes backGroundColor {
+@keyframes backGroundColorBody {
   from {
-    background-color: #ffac91;
+    background-color: #ff9068;
   }
 
   to {
-    background-color: #f5d1f2;
+    background-color: #cdacfa;
   }
 }
 
-.counter {
-  color: #673965;
+#counter {
+  color: #efddd8;
   font-size: 170px;
   font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+}
+
+@keyframes backGroundColorText {
+  from {
+    color: #efddd8;
+  }
+
+  to {
+    color: #f0def2;
+  }
 }

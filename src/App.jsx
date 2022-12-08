@@ -14,9 +14,14 @@ function App() {
   const [counterState, setCounterState] = useState("idle");
   const [count, setCount] = useState(START);
 
-  useLayoutEffect(() => {
-    document.body.style.animation = `backGroundColor ${END_DAY}s ease-in-out`;
-  }, []);
+  useEffect(() => {
+    const counter = document.getElementById("counter");
+
+    if (counterState !== "idle") {
+      document.body.style.animation = `backGroundColorBody ${END_DAY}s ease-in-out`;
+      counter.style.animation = `backGroundColorText ${END_DAY}s ease-in-out`;
+    }
+  }, [counterState]);
 
   useInterval(
     () => {
@@ -52,7 +57,7 @@ function App() {
 
   return (
     <div className="App">
-      <p className="counter">{count}</p>
+      <p id="counter">{count}</p>
 
       <p>{counterState}</p>
 
