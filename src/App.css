@@ -9,6 +9,13 @@ body {
   background-color: #ff9068;
 }
 
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 @keyframes backGroundColorBody {
   from {
     background-color: #ff9068;
@@ -20,17 +27,65 @@ body {
 }
 
 #counter {
-  color: #efddd8;
-  font-size: 170px;
-  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  font-size: 50px;
+  font-family: Inter, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  padding: 15px;
 }
 
-@keyframes backGroundColorText {
-  from {
-    color: #efddd8;
+#button {
+  background-color: transparent;
+  outline: 0px;
+  letter-spacing: -2px;
+  border: none;
+  font-family: Inter;
+  font-size: 3rem;
+  transition: all 100ms ease-in-out;
+  padding: 15px;
+}
+
+#button:hover {
+  color: #fff;
+  text-shadow: 1px 1px 10px #f0dbd592;
+  animation: startButtonAnimation 500ms ease-in-out infinite;
+}
+
+#charater {
+  width: 125px;
+  animation: startButtonAnimation 1s ease-in-out infinite;
+  padding: 15px;
+}
+
+h1 {
+  font-family: Inter;
+  letter-spacing: -1px;
+  font-size: 90px;
+  padding: 5px;
+}
+
+h2 {
+  font-family: "Nerko One";
+  font-size: 2rem;
+  line-height: 0;
+  padding: -5px;
+}
+
+@keyframes startButtonAnimation {
+  0% {
+    transform: translateY(-5px);
   }
 
-  to {
-    color: #f0def2;
+  50% {
+    transform: translateY(5px);
   }
+
+  100% {
+    transform: translateY(-5px);
+  }
+}
+
+#text-rest {
+  margin-top: 70px;
+  font-family: "Nerko One";
+  font-size: 30px;
+  line-height: 0;
 }

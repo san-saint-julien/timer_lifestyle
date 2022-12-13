@@ -1,31 +1,33 @@
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import { useInterval } from "ahooks";
+import FlipNumbers from "react-flip-numbers";
+import React, { useRef } from "react";
 
-const isProduction = import.meta.env.PROD;
+const isProduction = true;
 
-const START = 0;
 const ONE_HOUR_SECONDS = isProduction ? 3600 : 1;
-const START_PAUSE_TIME = ONE_HOUR_SECONDS * isProduction ? 3.5 : 3;
-const END_PAUSE_TIME = START_PAUSE_TIME + ONE_HOUR_SECONDS;
-const END_DAY = ONE_HOUR_SECONDS * 7;
+const START = ONE_HOUR_SECONDS * 9;
+const START_PAUSE_TIME = ONE_HOUR_SECONDS * isProduction ? 4.5 : 4;
+const END_PAUSE_TIME = START_PAUSE_TIME - ONE_HOUR_SECONDS;
+const END_DAY = 0;
 
 function App() {
   const [counterState, setCounterState] = useState("idle");
   const [count, setCount] = useState(START);
+  const MyComponent = () => {
+  const audioRef = useRef(null);
+
 
   useEffect(() => {
-    const counter = document.getElementById("counter");
-
-    if (counterState !== "idle") {
-      document.body.style.animation = `backGroundColorBody ${END_DAY}s ease-in-out`;
-      counter.style.animation = `backGroundColorText ${END_DAY}s ease-in-out`;
+    if (document.body && counterState !== "idle") {
+      document.body.style.animation = `backGroundColorBody ${START}s ease-in-out`;
     }
   }, [counterState]);
 
   useInterval(
     () => {
-      setCount(count + 1);
+      setCount(count - 1);
     },
     counterState !== "idle" ? 1000 : null
   );
@@ -36,33 +38,70 @@ function App() {
   }, [count]);
 
   function handlePause() {
-    console.log(END_PAUSE_TIME);
     if (count === START_PAUSE_TIME) {
-      setCounterState("pause");
+      setCounterState("Pause");
     }
     if (count === END_PAUSE_TIME) {
-      setCounterState("working");
+      setCounterState("Working");
     }
   }
 
   function handleEnd() {
     if (count === END_DAY) {
       setCounterState("idle");
+      setCount(START);
     }
   }
 
   function handleworking() {
-    setCounterState("working");
+    setCounterState("Working");
   }
 
+  const [imgSrc, setImgSrc] = useState("/public/images/character_working.png");
+
+  useEffect(() => {
+    if (counterState === "Pause") {
+      setImgSrc("/public/images/character_pause.png");
+    } else {
+      setImgSrc("/public/images/character_working.png");
+    }
+  }, [counterState]);
+
   return (
-    <div className="App">
-      <p id="counter">{count}</p>
+    <main className="App">
+      {counterState !== "idle" ? (
+        <div>
+          <img src={imgSrc} alt="kawaii" id="charater" />
 
-      <p>{counterState}</p>
+          <FlipNumbers height={55} width={50} play numbers={String(count)} />
 
-      <button onClick={handleworking}>working</button>
-    </div>
+          <p>Secondes restantes</p>
+
+          <p id="text-rest">{counterState}</p>
+
+          <div>
+            <audio ref={audioRef} src="mysound.mp3"/>
+          </div>
+        </div>
+      ) : (
+        <>
+          <header>
+            <h1>Welcome</h1>
+            <h2>To your new work journey</h2>
+          </header>
+
+          <img
+            src="/public/images/character_start.png"
+            alt="kawaii"
+            id="charater"
+          />
+
+          <button onClick={handleworking} id="button">
+            START
+          </button>
+        </>
+      )}
+    </main>
   );
 }
 
